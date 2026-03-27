@@ -63,7 +63,7 @@ client.on('messageCreate', (message) => {
   if (message.author.bot) return;
 
   if (message.content === '!ping') {
-    message.reply('Basketball is paul's favorite sport!');
+    message.reply('Basketball is pauls favorite sport!');
   }
 });
 
