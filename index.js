@@ -13,7 +13,7 @@ const client = new Client({
 const CHANNEL_ID = process.env.CHANNEL_ID;
 const ROLE_ID = "1487167480043540560";
 
-const START_ID = 700
+const START_ID = 1413
 const START_DATE = new Date("2026-03-27"); //hardcode no restart
 
 function getTodayId() {
@@ -27,7 +27,7 @@ function getTodayId() {
     START_DATE.toLocaleString("en-US", { timeZone: "America/New_York" })
   );
 
-  // Normalize both to midnight
+  // Normalize both to midnightg
   currentDate.setHours(0, 0, 0, 0);
   startDate.setHours(0, 0, 0, 0);
 
@@ -36,7 +36,7 @@ function getTodayId() {
     (currentDate - startDate) / (1000 * 60 * 60 * 24)
   );
 
-  return START_ID + diffDays;
+  return START_ID + diffDays - 1;
 }
 
 async function sendDailyMessage() {
