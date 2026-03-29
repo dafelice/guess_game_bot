@@ -55,6 +55,9 @@ const {execSync} = require("child_process");
 function getLatestCommitInfo() {
   try {
     const commitInf = execSync("git log -1 --pretty=format:%h|%s|%an|%cI").toString().trim();
+
+    console.log("GIT OUTPUT:", output);
+
     const [hash, gitMessage, author, isoDate] = commitInf.split("|");
     return {gitMessage, isoDate};
   } catch (err) {
