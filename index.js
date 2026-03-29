@@ -54,8 +54,10 @@ client.once("clientReady", () => {
 
   sendDailyMessage();
 
-  cron.schedule("0 9 * * *", () => {
+  cron.schedule("0 10 * * *", () => {
     sendDailyMessage();
+  },{
+    timezone: "America/New_York",
   });
 });
 

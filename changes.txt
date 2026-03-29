@@ -1,0 +1,3 @@
+- parse winning messages
+- keep track of streaks
+- player averages (weekly, monthly, lifetime etc)
