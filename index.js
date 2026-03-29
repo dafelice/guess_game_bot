@@ -86,7 +86,7 @@ async function sendStartupMessage() {
   if (commit) {
     const nyTime = formatToNYTime(commit.isoDate);
     message += `\n ${commit.gitMessage}`;
-    message += `\n🕒 ${nyTime} (ET)`;
+    message += `\n ${nyTime} (ET)`;
   }
 
   await channel.send(message);
