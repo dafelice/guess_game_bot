@@ -50,23 +50,25 @@ async function sendDailyMessage() {
 }
 
 
-const {execSync} = require("child_process");
+const { execSync } = require("child_process");
 
 function getLatestCommitInfo() {
   try {
     const commitInf = execSync(
-      'git log -1 --pretty=format:"%h|%s|%an|%cI"'
+      "git log -1 --pretty=format:%h\\|%s\\|%an\\|%cI"
     ).toString().trim();
 
-    console.log("GIT OUTPUT:", output);
+    console.log("GIT OUTPUT:", commitInf);
 
     const [hash, gitMessage, author, isoDate] = commitInf.split("|");
-    return {gitMessage, isoDate};
+
+    return { hash, gitMessage, author, isoDate };
   } catch (err) {
-    console.error ("Failed to get commit message:", err);
+    console.error("Failed to get commit message:", err);
     return null;
   }
 }
+
 
 function formatToNYTime(isoDate) {
   return new Date(isoDate).toLocaleString("en-US", {
