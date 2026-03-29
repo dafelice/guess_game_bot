@@ -49,10 +49,46 @@ async function sendDailyMessage() {
   console.log("Sent:", message);
 }
 
+
+const {execSync} = require("child_process");
+
+function getLatestCommitInfo() {
+  try {
+    const commitInf = execSync("git log -1 --pretty=format:%h|%s|%an|%cI").toString().trim();
+    const [hash, gitMessage, author, isoDate] = commitInf.split("|");
+    return {gitMessage, isoDate};
+  } catch (err) {
+    console.error ("Failed to get commit message:", err);
+    return null;
+  }
+}
+
+function formatToNYTime(isoDate) {
+  return new Date(isoDate).toLocaleString("en-US", {
+    timeZone: "America/New_York",
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+}
+
+async function sendStartupMessage() {
+  const channel = await client.channels.fetch(CHANNEL_ID);
+  const commit = getLatestCommitInfo();
+  let message = "Bot started up succesfully!";
+
+  if (commit) {
+    const nyTime = formatToNYTime(commit.isoDate);
+    message += `\n ${commit.gitMessage}`;
+    message += `\n🕒 ${nyTime} (ET)`;
+  }
+
+  await channel.send(message);
+}
+
 client.once("clientReady", () => {
   console.log(`Logged in as ${client.user.tag}`);
 
-  sendDailyMessage();
+  sendStartupMessage();
 
   cron.schedule("0 10 * * *", () => {
     sendDailyMessage();
